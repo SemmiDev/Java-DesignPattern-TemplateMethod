@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_02-template_method" default="compile.module.02-template_method">
+  <dirname property="module.02-template_method.basedir" file="${ant.file.module_02-template_method}"/>
+  
+  <property name="module.jdk.home.02-template_method" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.02-template_method" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.02-template_method" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.02-template_method" value="-encoding UTF-8 -source 13 -target 13 ${compiler.args}"/>
+  
+  <property name="02-template_method.output.dir" value="${module.02-template_method.basedir}/out/production/02-Template Method"/>
+  <property name="02-template_method.testoutput.dir" value="${module.02-template_method.basedir}/out/test/02-Template Method"/>
+  
+  <path id="02-template_method.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="02-template_method.module.production.classpath">
+    <path refid="${module.jdk.classpath.02-template_method}"/>
+  </path>
+  
+  <path id="02-template_method.runtime.production.module.classpath">
+    <pathelement location="${02-template_method.output.dir}"/>
+  </path>
+  
+  <path id="02-template_method.module.classpath">
+    <path refid="${module.jdk.classpath.02-template_method}"/>
+    <pathelement location="${02-template_method.output.dir}"/>
+  </path>
+  
+  <path id="02-template_method.runtime.module.classpath">
+    <pathelement location="${02-template_method.testoutput.dir}"/>
+    <pathelement location="${02-template_method.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.02-template_method">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.02-template_method">
+    <patternset refid="excluded.from.module.02-template_method"/>
+  </patternset>
+  
+  <path id="02-template_method.module.sourcepath">
+    <dirset dir="${module.02-template_method.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.02-template_method" depends="compile.module.02-template_method.production,compile.module.02-template_method.tests" description="Compile module 02-Template Method"/>
+  
+  <target name="compile.module.02-template_method.production" depends="register.custom.compilers" description="Compile module 02-Template Method; production classes">
+    <mkdir dir="${02-template_method.output.dir}"/>
+    <javac2 destdir="${02-template_method.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.02-template_method}/javac">
+      <compilerarg line="${compiler.args.02-template_method}"/>
+      <bootclasspath refid="02-template_method.module.bootclasspath"/>
+      <classpath refid="02-template_method.module.production.classpath"/>
+      <src refid="02-template_method.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.02-template_method"/>
+    </javac2>
+    
+    <copy todir="${02-template_method.output.dir}">
+      <fileset dir="${module.02-template_method.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.02-template_method.tests" depends="register.custom.compilers,compile.module.02-template_method.production" description="compile module 02-Template Method; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.02-template_method" description="cleanup module">
+    <delete dir="${02-template_method.output.dir}"/>
+    <delete dir="${02-template_method.testoutput.dir}"/>
+  </target>
+</project>
